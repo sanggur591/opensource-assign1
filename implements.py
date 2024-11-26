@@ -86,8 +86,15 @@ class Ball(Basic):
         # TODO: Implement a service that bounces off when the ball hits the wall
         pass
         # 좌우 벽 충돌
+        if self.rect.colliderect(Rect((0,0),(config.wall_width, config.display_dimension[1]))) :
+            self.dir = 180 - self.dir
+        
+        if self.rect.colliderect(Rect((config.display_dimension[0] - config.wall_width ,0),(config.wall_width, config.display_dimension[1]))) :
+            self.dir = 540 - self.dir
         
         # 상단 벽 충돌
+        if self.rect.colliderect(Rect(0, 0, config.display_dimension[0], config.wall_width)) :
+            self.dir = 360 - self.dir
     
     def alive(self):
         # ============================================
