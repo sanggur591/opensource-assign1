@@ -37,6 +37,8 @@ class Block(Basic):
         # ============================================
         # TODO: Implement an event when block collides with a ball
         self.alive = False
+        self.rect.width = 0
+        self.rect.height = 0
         
         
 
@@ -70,12 +72,10 @@ class Ball(Basic):
     def collide_block(self, blocks: list):
         # ============================================
         # TODO: Implement an event when the ball hits a block
-        # 만약 블록의 경계선에 닿는다면 1. 블록 리스트에서 제외 + 해당블록 삭제요청
         for block in blocks:
             if self.rect.colliderect(block.rect):
                 self.dir = 360 - self.dir + random.randint(-5, 5)
                 block.collide()
-                blocks.remove(block)
 
     def collide_paddle(self, paddle: Paddle) -> None:
         if self.rect.colliderect(paddle.rect):
@@ -90,7 +90,7 @@ class Ball(Basic):
             self.dir = 180 - self.dir
         
         if self.rect.colliderect(Rect((config.display_dimension[0] - config.wall_width ,0),(config.wall_width, config.display_dimension[1]))) :
-            self.dir = 540 - self.dir
+            self.dir = 180 - self.dir
         
         # 상단 벽 충돌
         if self.rect.colliderect(Rect(0, 0, config.display_dimension[0], config.wall_width)) :
