@@ -36,7 +36,11 @@ class Block(Basic):
     def collide(self):
         # ============================================
         # TODO: Implement an event when block collides with a ball
-        pass
+        self.alive = False
+        self.rect.width = 0
+        self.rect.height = 0
+        
+        
 
 
 class Paddle(Basic):
@@ -68,7 +72,21 @@ class Ball(Basic):
     def collide_block(self, blocks: list):
         # ============================================
         # TODO: Implement an event when the ball hits a block
-        pass
+        for block in blocks:
+            if self.rect.colliderect(block.rect[0], block.rect[1], block.rect.width, 1):
+                self.dir = 360 - self.dir + random.randint(-5, 5)
+                block.collide()
+            if self.rect.colliderect(block.rect[0], block.rect[1] + block.rect.height - 1, block.rect.width, 1):
+                self.dir = 360 - self.dir + random.randint(-5, 5)
+                block.collide()
+
+            if self.rect.colliderect(block.rect[0], block.rect[1], 1, block.rect.height):
+                self.dir = 180 - self.dir + random.randint(-5, 5)
+                block.collide()
+            if self.rect.colliderect(block.rect[0] + block.rect.width - 1 , block.rect[1], 1, block.rect.height):
+                self.dir = 180 - self.dir + random.randint(-5, 5)
+                block.collide()
+
 
     def collide_paddle(self, paddle: Paddle) -> None:
         if self.rect.colliderect(paddle.rect):
@@ -79,10 +97,20 @@ class Ball(Basic):
         # TODO: Implement a service that bounces off when the ball hits the wall
         pass
         # 좌우 벽 충돌
+        if self.rect.colliderect(Rect((0,0),(config.wall_width, config.display_dimension[1]))) :
+            self.dir = 180 - self.dir
+        
+        if self.rect.colliderect(Rect((config.display_dimension[0] - config.wall_width ,0),(config.wall_width, config.display_dimension[1]))) :
+            self.dir = 180 - self.dir
         
         # 상단 벽 충돌
+        if self.rect.colliderect(Rect(0, 0, config.display_dimension[0], config.wall_width)) :
+            self.dir = 360 - self.dir
     
     def alive(self):
         # ============================================
         # TODO: Implement a service that returns whether the ball is alive or not
-        pass
+        if self.center[1] > config.display_dimension[1] :
+            return False
+        else :
+            return True
