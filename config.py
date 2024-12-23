@@ -1,6 +1,6 @@
 # Setting for Blocks
 # Number of blocks
-num_blocks = (5, 3)
+num_blocks = (5, 4)
 # Size of margin
 margin = (60, 40)
 # Size of block
@@ -53,7 +53,7 @@ paddle_long_ratio = 2
 paddle_long_time = 5
 paddle_long_color = (0, 126, 255)
 
-colors = [(255, 0, 0), (255, 165, 0), (255, 255, 0)]
+colors = [(169, 169, 169), (255, 0, 0), (255, 165, 0), (255, 255, 0)] 
 collision_limit = len(colors) - 1
 
 # Total number of life.
