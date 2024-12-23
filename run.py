@@ -21,6 +21,7 @@ life = config.life
 start = False
 
 
+
 def create_blocks():
     for i in range(config.num_blocks[0]):  
         for j in range(config.num_blocks[1]):  
@@ -76,7 +77,10 @@ def tick():
             ball.rect.centerx = paddle.rect.centerx
             ball.rect.bottom = paddle.rect.top
 
-        ball.collide_block(BLOCKS)
+        item = ball.collide_block(BLOCKS)
+        if(item != None):
+            ITEMS.append(item)
+
         ball.collide_paddle(paddle)
         ball.hit_wall()
         if ball.alive() == False:
@@ -129,6 +133,10 @@ def main():
                 ball.draw(surface)
             for block in BLOCKS:
                 block.draw(surface)
+            for item in ITEMS:
+                item.draw(surface)
+                item.dir = 270
+                item.move()
 
         pygame.display.update()
         fps_clock.tick(config.fps)
