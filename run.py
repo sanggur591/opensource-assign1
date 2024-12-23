@@ -22,18 +22,31 @@ start = False
 
 
 def create_blocks():
-    for i in range(config.num_blocks[0]):
-        for j in range(config.num_blocks[1]):
+    for i in range(config.num_blocks[0]):  
+        for j in range(config.num_blocks[1]):  
             x = config.margin[0] + i * (config.block_size[0] + config.spacing[0])
             y = (
                 config.margin[1]
                 + config.scoreboard_height
                 + j * (config.block_size[1] + config.spacing[1])
             )
-            color_index = j % len(config.colors)
-            color = config.colors[color_index]
-            block = Block(color, (x, y))
+
+            
+            if j == 0:
+                
+                block = Block(config.colors[0], (x, y), layer=0)
+            elif j == 1:
+                
+                block = Block(config.colors[1], (x, y), layer=1)
+            elif j == 2:
+                
+                block = Block(config.colors[2], (x, y), layer=2)
+            elif j == 3:
+                
+                block = Block(config.colors[3], (x, y), layer=3)
+            
             BLOCKS.append(block)
+
 
 
 def tick():

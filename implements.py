@@ -8,6 +8,7 @@ import pygame
 from pygame.locals import Rect, K_LEFT, K_RIGHT
 
 
+
 class Basic:
     def __init__(self, color: tuple, speed: int = 0, pos: tuple = (0, 0), size: tuple = (0, 0)):
         self.color = color
@@ -25,22 +26,40 @@ class Basic:
 
 
 class Block(Basic):
-    def __init__(self, color: tuple, pos: tuple = (0,0), alive = True):
+    def __init__(self, color: tuple, pos: tuple = (0, 0), layer: int = 0, alive=True):
+        """
+        color: 블록의 초기 색상
+        pos: 블록의 위치
+        layer: 블록의 층 (회색은 0, 나머지는 1 이상)
+        """
         super().__init__(color, 0, pos, config.block_size)
-        self.pos = pos
+        self.layer = layer  # 층 정보
         self.alive = alive
+        self.collision_count = 0  # 회색 블록의 충돌 횟수
 
     def draw(self, surface) -> None:
-        pygame.draw.rect(surface, self.color, self.rect)
-    
+        if self.alive:
+            pygame.draw.rect(surface, self.color, self.rect)
+
     def collide(self):
-        # ============================================
-        # TODO: Implement an event when block collides with a ball
-        self.alive = False
-        self.rect.width = 0
-        self.rect.height = 0
-        
-        
+        if not self.alive:
+            return
+
+        if self.layer == 0:  # 회색 블록
+            self.collision_count += 1
+            if self.collision_count <= config.collision_limit:
+            
+                self.color = config.colors[self.collision_count]
+            else:
+                self.alive = False
+                self.rect.width = 0
+                self.rect.height = 0
+             
+        else:  # 나머지블록
+            self.alive = False
+            self.rect.width = 0
+            self.rect.height = 0
+            
 
 
 class Paddle(Basic):
@@ -114,3 +133,4 @@ class Ball(Basic):
             return False
         else :
             return True
+        
