@@ -75,9 +75,9 @@ block_breaker_game/
 요소	설명	이미지
 |제목|내용|설명|
 |------|---|---|
-|테스트1|테스트2|테스트3|
-|테스트1|테스트2|테스트3|
-|테스트1|테스트2|테스트3|
+|시작화면|스페이스 바로 시작가능합니다|<img width="448" alt="사진 1" src="https://github.com/user-attachments/assets/577bb125-63c7-4a50-b401-1caec7e85e3b" />|
+|아이템 드랍|20%확률로 아이템을 드랍합니다|<img width="440" alt="사진 2" src="https://github.com/user-attachments/assets/b6003a3e-9c71-48d2-8d3d-f2980c395f2b" />|
+|게임오버|라이프를 다 쓰면 게임오버됩니다|<img width="442" alt="사진 3" src="https://github.com/user-attachments/assets/c9b715d5-beed-4ac9-ae09-0bc73eb7473e" />|
 
 기여
 이 프로젝트는 오픈소스이며, 누구나 기여할 수 있습니다. 버그 수정, 기능 추가, 개선 사항 등을 제안하려면 이 저장소에서 이슈를 생성하거나 풀 리퀘스트를 제출해 주세요.
