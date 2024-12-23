@@ -30,10 +30,14 @@ python run.py
 개발 환경
 Python 3.12.7
 프로젝트 구조
-block_breaker_game/
+block_breaker_game
+
 config.py        # 게임 설정
+
 implement.py     # 게임 구현
+
 run.py           # 게임 실행
+
 README.md        # 리드미 파일
 
 요소	설명	이미지
