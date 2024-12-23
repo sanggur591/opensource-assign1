@@ -42,8 +42,9 @@ class Block(Basic):
             pygame.draw.rect(surface, self.color, self.rect)
 
     def collide(self):
+        deleted = False
         if not self.alive:
-            return
+            return 
 
         if self.layer == 0:  # 회색 블록
             self.collision_count += 1
@@ -54,11 +55,16 @@ class Block(Basic):
                 self.alive = False
                 self.rect.width = 0
                 self.rect.height = 0
+                deleted = True
+                
              
         else:  # 나머지블록
             self.alive = False
             self.rect.width = 0
             self.rect.height = 0
+            deleted = True
+        
+        return deleted
             
 
 
@@ -80,31 +86,49 @@ class Paddle(Basic):
 
 
 class Ball(Basic):
-    def __init__(self, pos: tuple = config.ball_pos):
-        super().__init__(config.ball_color, config.ball_speed, pos, config.ball_size)
+    def __init__(self, pos: tuple = config.ball_pos, color: tuple = config.ball_color):
+        super().__init__(color, config.ball_speed, pos, config.ball_size)
         self.power = 1
         self.dir = 90 + random.randint(-45, 45)
 
     def draw(self, surface):
         pygame.draw.ellipse(surface, self.color, self.rect)
 
+    def draw_item(self, surface, pos: tuple, color: tuple):
+        temp_rect = self.rect.copy() 
+        temp_rect.topleft = pos 
+        pygame.draw.ellipse(surface, color, temp_rect)
+
     def collide_block(self, blocks: list):
         # ============================================
         # TODO: Implement an event when the ball hits a block
         for block in blocks:
+            collided = False
             if self.rect.colliderect(block.rect[0], block.rect[1], block.rect.width, 1):
                 self.dir = 360 - self.dir + random.randint(-5, 5)
-                block.collide()
-            if self.rect.colliderect(block.rect[0], block.rect[1] + block.rect.height - 1, block.rect.width, 1):
+                collided = True
+                
+            elif self.rect.colliderect(block.rect[0], block.rect[1] + block.rect.height - 1, block.rect.width, 1):
                 self.dir = 360 - self.dir + random.randint(-5, 5)
-                block.collide()
+                collided = True
+                
 
-            if self.rect.colliderect(block.rect[0], block.rect[1], 1, block.rect.height):
+            elif self.rect.colliderect(block.rect[0], block.rect[1], 1, block.rect.height):
                 self.dir = 180 - self.dir + random.randint(-5, 5)
-                block.collide()
-            if self.rect.colliderect(block.rect[0] + block.rect.width - 1 , block.rect[1], 1, block.rect.height):
+                collided = True
+            
+            elif self.rect.colliderect(block.rect[0] + block.rect.width - 1 , block.rect[1], 1, block.rect.height):
                 self.dir = 180 - self.dir + random.randint(-5, 5)
-                block.collide()
+                collided = True
+
+
+            if collided == True and block.collide() == True:
+                pos = ((block.rect[0]+config.block_size[0]/2),(block.rect[1]+config.block_size[1]/2))
+                color = config.ball_red if block.layer == 0 else config.ball_blue
+                item = Ball(pos = pos, color = color)
+                return item
+
+                
 
 
     def collide_paddle(self, paddle: Paddle) -> None:
