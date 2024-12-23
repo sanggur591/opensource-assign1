@@ -123,9 +123,16 @@ class Ball(Basic):
 
 
             if collided == True and block.collide() == True:
+                item = None
                 pos = ((block.rect[0]+config.block_size[0]/2),(block.rect[1]+config.block_size[1]/2))
-                color = config.ball_red if block.layer == 0 else config.ball_blue
-                item = Ball(pos = pos, color = color)
+                num = random.randint(1,10)
+                color = None
+                if(num == 1):
+                    color = config.ball_red
+                    item = Ball(pos = pos, color = color)
+                elif(num == 2):
+                    color = config.ball_blue
+                    item = Ball(pos = pos, color = color)
                 return item
 
                 
